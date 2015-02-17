@@ -31,13 +31,19 @@
 var PostItemView = Backbone.View.extend({
   tagName: 'li',
   className: 'post',
-
   template: _.template($('#blog-list-template').text()),
+
+  events: {
+    'click .js-destroy': 'destroyPost',
+  },
 
   render: function(){
     this.$el.html( this.template( this.model.toJSON() ) );
   },
 
+  destroyPost: function(){
+    this.model.destroy();
+  }
 
 });
 
@@ -46,7 +52,7 @@ var PostsListView = Backbone.View.extend({
   className: 'js-posts',
 
   initialize: function(){
-     this.listenTo(this.collection, 'sync', this.render);
+     this.listenTo(this.collection, 'destroy sync', this.render);
   },
 
   render: function(){
@@ -59,28 +65,26 @@ var PostsListView = Backbone.View.extend({
      self.$el.append(itemView.el);
     });
 
-    $('.app-container').html(self.el);
+    $('.posts-container').html(self.el);
     return this;
-    }
-  });
+  }
+
+});
 
 
 var NewPostView = Backbone.View.extend({});
 
 
 var PostDetailView = Backbone.View.extend({
-  el: $('body'),
+  el: $('.js-post'),
 
   template: _.template($('#view-post-template').text()),
-
-  // initialize: function() {
-  //   this.listenTo(this.model, 'sync', this.render);
-  // },
 
   render: function(){
     // this.$el.empty();
     this.$el.html(this.template(this.model.toJSON()));
-   }
+  }
+
  });
 
 // Router //
@@ -98,6 +102,7 @@ var PostDetailView = Backbone.View.extend({
     },
 
     index: function(){
+      // this.postDetailView.remove();
       this.posts.fetch();
       this.postsList.render();
     },
@@ -105,6 +110,7 @@ var PostDetailView = Backbone.View.extend({
     getPost: function( id ){
       this.postDetailView.model = this.posts.get(id);
       this.postDetailView.render();
+      $('.posts-container').hide();
     }
 
   });

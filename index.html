@@ -8,19 +8,24 @@
 <body>
 
 <div class="app-container">
-
+  <div class="posts-container">
+  </div>
+  <div class="js-post">
+  </div>
 </div>
-
 
 <script type="text/template" id="blog-list-template">
 <a href="#posts/<%= _id %>"><%= title %></a>
+<button class="js-destroy">Delete</button>
 </script>
 
 
 <script type="text/template" id="view-post-template">
-  <%= title %>
-  <%= body %>
-  <%= timestamp %>
+  <ul>
+    <li><%= title %></li>
+    <li><%= timestamp %></li>
+    <li><%= body %></li>
+  </ul>
 </script>
 
 
