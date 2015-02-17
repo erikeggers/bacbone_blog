@@ -42,14 +42,16 @@ var PostItemView = Backbone.View.extend({
   },
 
   destroyPost: function(){
+    console.log('hello');
     this.model.destroy();
   }
 
 });
 
 var PostsListView = Backbone.View.extend({
-  tagName: 'div',
+  // tagName: 'div',
   className: 'js-posts',
+  el: '.posts-container',
 
   initialize: function(){
      this.listenTo(this.collection, 'destroy sync', this.render);
@@ -65,7 +67,7 @@ var PostsListView = Backbone.View.extend({
      self.$el.append(itemView.el);
     });
 
-    $('.posts-container').html(self.el);
+    // $('.posts-container').html(self.el); // Ask about this in class
     return this;
   }
 
@@ -107,11 +109,17 @@ var PostDetailView = Backbone.View.extend({
     },
 
     getPost: function( id ){
-      this.postDetailView.model = this.posts.get(id);
-      this.postDetailView.render();
-      $('.posts-container').hide();
-    }
 
+      $('.posts-container').html(this.postDetailView.el);
+
+      var self = this;
+
+      this.posts.fetch().done(function(){
+      self.postDetailView.model = self.posts.get(id);
+      self.postDetailView.render();
+
+    });
+    }
   });
 
   $(document).ready(function(){
