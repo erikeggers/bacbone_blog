@@ -78,7 +78,7 @@ var PostDetailView = Backbone.View.extend({
   // },
 
   render: function(){
-    this.$el.empty();
+    // this.$el.empty();
     this.$el.html(this.template(this.model.toJSON()));
    }
  });
