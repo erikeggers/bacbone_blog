@@ -109,17 +109,11 @@ var PostDetailView = Backbone.View.extend({
     },
 
     getPost: function( id ){
-
+      this.postDetailView.model = this.posts.get(id);
+      this.postDetailView.render();
       $('.posts-container').html(this.postDetailView.el);
-
-      var self = this;
-
-      this.posts.fetch().done(function(){
-      self.postDetailView.model = self.posts.get(id);
-      self.postDetailView.render();
-
-    });
     }
+
   });
 
   $(document).ready(function(){
