@@ -31,23 +31,12 @@ var PostItemView = Backbone.View.extend({
   tagName: 'li',
   className: 'post',
 
-  events: {
-    'click': 'getPost'
-  },
-
   template: _.template($('#blog-list-template').text()),
 
   render: function(){
     this.$el.html( this.template( this.model.toJSON() ) );
   },
 
-  getPost: function(event){
-    event.preventDefault();
-    console.log(this.model);
-    router.navigate('posts/' + this.model.id, {
-      trigger: true
-    });
-  }
 
 });
 
@@ -115,6 +104,7 @@ var PostDetailView = Backbone.View.extend({
     },
 
     getPost: function( id ){
+      this.posts.fetch();
       this.postDetailView.render();
     }
 
