@@ -102,7 +102,6 @@ var PostDetailView = Backbone.View.extend({
     },
 
     index: function(){
-      // this.postDetailView.remove();
       this.posts.fetch();
       this.postsList.render();
     },
