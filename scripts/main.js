@@ -30,22 +30,23 @@
 var PostItemView = Backbone.View.extend({
   tagName: 'li',
   className: 'post',
-  template: _.template($('#blog-list-template').text()),
 
   events: {
-    'click': 'viewPost'
+    'click': 'getPost'
   },
 
-  viewPost: function(event){
+  template: _.template($('#blog-list-template').text()),
+
+  render: function(){
+    this.$el.html( this.template( this.model.toJSON() ) );
+  },
+
+  getPost: function(event){
     event.preventDefault();
     console.log(this.model);
     router.navigate('posts/' + this.model.id, {
       trigger: true
     });
-  },
-
-  render: function(){
-    this.$el.html( this.template( this.model.toJSON() ) );
   }
 
 });
@@ -77,7 +78,19 @@ var PostsListView = Backbone.View.extend({
 var NewPostView = Backbone.View.extend({});
 
 
-var PostDetailView = Backbone.View.extend({});
+var PostDetailView = Backbone.View.extend({
+  el: 'article',
+  template: _.template($('#view-post-template').text()),
+
+  initialize: function() {
+    this.listenTo(this.model, 'sync', this.render);
+  },
+
+  render: function(){
+    this.$el.html(this.template(this.model.toJSON()));
+  }
+
+});
 
 
 // Router //
@@ -91,8 +104,9 @@ var PostDetailView = Backbone.View.extend({});
     initialize: function(){
       this.posts = new PostsCollection();
       this.post = new Post();
-      this.postsList = new PostsListView({collection: this.posts});
       this.postItem = new PostItemView({model: this.post});
+      this.postsList = new PostsListView({collection: this.posts});
+      this.postDetailView = new PostDetailView({model:this.post});
     },
 
     index: function(){
@@ -101,7 +115,7 @@ var PostDetailView = Backbone.View.extend({});
     },
 
     getPost: function( id ){
-      this.postItem.render();
+      this.postDetailView.render();
     }
 
   });
