@@ -67,8 +67,24 @@ var PostsListView = Backbone.View.extend({
 var NewPostView = Backbone.View.extend({});
 
 
+// var PostDetailView = Backbone.View.extend({
+//   tagName: 'div',
+//   className: 'js-post',
+//   template: _.template($('#view-post-template').text()),
+//
+//   initialize: function() {
+//     this.listenTo(this.model, 'sync', this.render);
+//   },
+//
+//   render: function(){
+//     this.$el.html(this.template(this.model.toJSON()));
+//   }
+//
+// });
+
 var PostDetailView = Backbone.View.extend({
-  el: 'article',
+  el: $('body'),
+
   template: _.template($('#view-post-template').text()),
 
   initialize: function() {
@@ -76,11 +92,10 @@ var PostDetailView = Backbone.View.extend({
   },
 
   render: function(){
-    this.$el.html(this.template(this.model.toJSON()));
-  }
-
-});
-
+    this.$el.empty();
+    this.$el.html('<span>hello</span>');
+   }
+ });
 
 // Router //
 
@@ -93,7 +108,6 @@ var PostDetailView = Backbone.View.extend({
     initialize: function(){
       this.posts = new PostsCollection();
       this.post = new Post();
-      this.postItem = new PostItemView({model: this.post});
       this.postsList = new PostsListView({collection: this.posts});
       this.postDetailView = new PostDetailView({model:this.post});
     },
