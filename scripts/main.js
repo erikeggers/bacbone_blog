@@ -104,7 +104,6 @@ var PostDetailView = Backbone.View.extend({
     },
 
     getPost: function( id ){
-      this.posts.fetch();
       this.postDetailView.render();
     }
 
