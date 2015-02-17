@@ -93,9 +93,8 @@ var PostDetailView = Backbone.View.extend({
 
     initialize: function(){
       this.posts = new PostsCollection();
-      this.post = new Post();
       this.postsList = new PostsListView({collection: this.posts});
-      this.postDetailView = new PostDetailView({model:this.post});
+      this.postDetailView = new PostDetailView();
     },
 
     index: function(){
