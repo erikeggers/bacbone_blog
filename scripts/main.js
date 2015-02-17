@@ -14,6 +14,7 @@
         body: '',
         timestamp: (new Date()).toString()
       });
+      return attributes;
     }
   });
 
@@ -67,33 +68,18 @@ var PostsListView = Backbone.View.extend({
 var NewPostView = Backbone.View.extend({});
 
 
-// var PostDetailView = Backbone.View.extend({
-//   tagName: 'div',
-//   className: 'js-post',
-//   template: _.template($('#view-post-template').text()),
-//
-//   initialize: function() {
-//     this.listenTo(this.model, 'sync', this.render);
-//   },
-//
-//   render: function(){
-//     this.$el.html(this.template(this.model.toJSON()));
-//   }
-//
-// });
-
 var PostDetailView = Backbone.View.extend({
   el: $('body'),
 
   template: _.template($('#view-post-template').text()),
 
-  initialize: function() {
-    this.listenTo(this.model, 'sync', this.render);
-  },
+  // initialize: function() {
+  //   this.listenTo(this.model, 'sync', this.render);
+  // },
 
   render: function(){
     this.$el.empty();
-    this.$el.html('<span>hello</span>');
+    this.$el.html(this.template(this.model.toJSON()));
    }
  });
 
@@ -118,6 +104,7 @@ var PostDetailView = Backbone.View.extend({
     },
 
     getPost: function( id ){
+      this.postDetailView.model = this.posts.get(id);
       this.postDetailView.render();
     }
 
