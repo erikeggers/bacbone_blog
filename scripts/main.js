@@ -49,7 +49,6 @@ var PostItemView = Backbone.View.extend({
 });
 
 var PostsListView = Backbone.View.extend({
-  // tagName: 'div',
   className: 'js-posts',
   el: '.posts-container',
 
@@ -113,7 +112,7 @@ var PostDetailView = Backbone.View.extend({
       this.posts.fetch().done(function (){
         self.postDetailView.model = self.posts.get(id);
         self.postDetailView.render();
-        $('.posts-container').html(self.postDetailView.el);  
+        $('.posts-container').html(self.postDetailView.el);
       });
     }
 
